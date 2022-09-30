@@ -9,13 +9,7 @@ class NewWindowPage extends Page {
 
     path = 'windows/new';
 
-    get header() {
-        return $('h3')
-    }
-
-    async headerText() {
-        return await (await this.header).getText();
-    }
+    expectedHeader = 'New Window';
 
 }
 

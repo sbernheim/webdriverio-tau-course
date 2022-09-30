@@ -4,11 +4,14 @@
   "description": "WebdriverIO Test Automation U Course",
   "main": "index.js",
   "scripts": {
+    "actions": "wdio wdio.conf.js --suite actions",
+    "a": "npx wdio run wdio.conf.js --suite actions",
     "test": "npx wdio run wdio.conf.js",
     "test:en": "npx wdio run wdio.conf.js --spec ./test/specs/waitForEnabled.test.js",
     "test:ex": "npx wdio run wdio.conf.js --spec ./test/specs/example.e2e.js",
     "test:el": "npx wdio run wdio.conf.js --spec ./test/specs/elements.test.js",
-    "test:ea": "npx wdio run wdio.conf.js --spec ./test/specs/elementActions.test.js",
+    "test:ea": "npx wdio run wdio.conf.js --spec ./test/specs/actions/elementActions.test.js",
+    "test:et": "npx wdio run wdio.conf.js --spec ./test/specs/title.test.js",
     "t": "wdio"
   },
   "author": "Sebastian Bernheim",

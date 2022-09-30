@@ -23,6 +23,10 @@ class LoginPage extends Page {
         return $('button[type="submit"]');
     }
 
+    get header() {
+        return $('h2')
+    }
+
     /**
      * Enters the passed username string into the login form username field 
      * @param {String} username 
@@ -30,6 +34,10 @@ class LoginPage extends Page {
     async enterUsername(username) {
         await this.usernameField.waitForDisplayed(1000);
         await this.usernameField.setValue(username);
+    }
+
+    async clickLoginButton() {
+        await this.loginButton.click();
     }
 
     /**
@@ -64,12 +72,6 @@ class LoginPage extends Page {
         await this.loginButton.click();
     }
 
-    /**
-     * overwrite specific options to adapt it to page object
-     */
-    /*open () {
-        return super.open('login');
-    }*/
 }
 
 module.exports = new LoginPage();

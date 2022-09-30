@@ -9,9 +9,7 @@ class MultiWindowPage extends Page {
 
     path = 'windows';
 
-    get header() {
-        return $('h3')
-    }
+    expectedHeader = 'Opening a new window';
 }
 
 module.exports = new MultiWindowPage();

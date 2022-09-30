@@ -72,6 +72,10 @@ class InternetPage extends Page {
         })
     }
     
+    async titleText() {
+        const title = await this.title;
+        return title.getText();
+    }
 }
 
 module.exports = new InternetPage();

@@ -21,6 +21,26 @@ module.exports = class Page {
         return $("//*[@id='page-footer']")
     }
 
+    get header() {
+        return $('h3')
+    }
+
+    get flashAlert () {
+        return $('#flash');
+    }
+
+    get flashAlertCloser() {
+        return $('#flash .close')
+    }
+
+    get forkMe() {
+        return $('img[alt^="Fork me"]')
+    }
+
+    async headerText() {
+        return await (await this.header).getText();
+    }
+
     body() {
         return $('body')
     }
@@ -35,13 +55,30 @@ module.exports = class Page {
         browser.pause(pauseMillis);
     }
 
+    async hideForkMe() {
+        await browser.execute("document.querySelector('img[alt^=\"Fork me\"]').style.display='none'");
+    }
+
+    async showForkMe() {
+        await browser.execute("document.querySelector('img[alt^=\"Fork me\"]').style.display=''");
+    }
+
+    async dismissAlert() {
+        await this.hideForkMe();
+        await this.forkMe.waitForDisplayed({reverse: true});
+        (await this.flashAlertCloser).click();
+        await this.showForkMe();
+        await this.forkMe.waitForDisplayed();
+    }
+
     /**
      * Returns the passed path appended to the root URL of this page
      *
      * @returns {String} url for the passed path on the rootUrl
      */
     url () {
-        return `${this.rootUrl}${this.path}`
+        //return `${this.rootUrl}${this.path}`
+        return `${browser.options.baseUrl}${this.path}`
     }
 
     /**

@@ -6,18 +6,22 @@ const Page = require('./page');
  * sub page containing specific selectors and methods for a specific page
  */
 class SecurePage extends Page {
+    path = 'secure';
 
     /**
      * define selectors using getter methods
      */
-    get flashAlert () {
-        return $('#flash');
+    get header() {
+        return $('h2')
     }
 
-    path = 'secure';
-    /*get path () {
-        return 'secure';
-    }*/
+    get logoutButton() {
+        return $('.example .button')
+    }
+
+    async logout() {
+        await this.logoutButton.click();
+    }
 }
 
 module.exports = new SecurePage();

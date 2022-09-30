@@ -1,3 +1,21 @@
+const { envs } = require('./envs');
+var ENV = process.env.ENV;
+
+if (!ENV || !['local','dev','qa','stage','prod'].includes(ENV)) {
+    console.log('ENV is not specified or is not one of [local|dev|qa|stage|prod]!  Using local...');
+    //process.exit;
+    ENV = 'local';
+}
+global.testenv = envs[ENV];
+
+var BROWSER = process.env.BROWSER;
+
+if (BROWSER === 'edge') BROWSER = 'MicrosoftEdge';
+if (!BROWSER || !['chrome','firefox','MicrosoftEdge'].includes(BROWSER)) {
+    console.log('BROSWER is not specified of is not one of [chrome|firefox|microsoftedge]!  Using chrome...')
+    BROWSER = 'chrome';
+}
+
 exports.config = {
     //
     // ====================
@@ -23,6 +41,11 @@ exports.config = {
     specs: [
         './test/specs/**/*.js'
     ],
+    suites: {
+        actions: [
+            './test/specs/actions/**/*.js'
+        ],
+    },
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -56,7 +79,9 @@ exports.config = {
         // 5 instances get started at a time.
         maxInstances: 5,
         //
-        browserName: 'chrome',
+        //browserName: 'chrome',
+        //browserName: 'firefox',
+        browserName: BROWSER,
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -94,7 +119,8 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    //baseUrl: 'http://localhost',
+    baseUrl: testenv.url,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -141,7 +167,8 @@ exports.config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 600000
+        //timeout: 60000
     },
     //
     // =====
